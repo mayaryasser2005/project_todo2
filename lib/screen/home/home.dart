@@ -43,17 +43,31 @@ class _HomeState extends State<Home> {
         child: const Icon(Icons.add),
       );
 
-  buildbottomNavigationBar() => BottomNavigationBar(
-          showUnselectedLabels: false,
-          showSelectedLabels: false,
-          currentIndex: currentIndex,
-          onTap: (tappedIndex) {
-            currentIndex = tappedIndex;
-            setState(() {});
-          },
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.list), label: "list"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: "settings"),
-          ]);
+  buildbottomNavigationBar() => BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8,
+        clipBehavior: Clip.hardEdge,
+        child: BottomNavigationBar(
+            showUnselectedLabels: false,
+            showSelectedLabels: false,
+            currentIndex: currentIndex,
+            onTap: (tappedIndex) {
+              currentIndex = tappedIndex;
+              setState(() {});
+            },
+            items: const [
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.list,
+                    size: 20,
+                  ),
+                  label: "list"),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.settings,
+                    size: 20,
+                  ),
+                  label: "settings"),
+            ]),
+      );
 }

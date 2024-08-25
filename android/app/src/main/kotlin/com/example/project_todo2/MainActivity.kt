@@ -1,4 +1,4 @@
-package com.route.project_todo2
+package com.example.project_todo2
 
 import io.flutter.embedding.android.FlutterActivity
 
