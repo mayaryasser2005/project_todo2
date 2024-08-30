@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'assets_color.dart';
 
-abstract class AssetsStyle {
+abstract class AppStyle {
   static const TextStyle appBarStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold, color: AppColors.White);
 

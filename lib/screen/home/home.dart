@@ -45,9 +45,13 @@ class _HomeState extends State<Home> {
 
   buildbottomNavigationBar() => BottomAppBar(
         shape: const CircularNotchedRectangle(),
+        color: Colors.white,
         notchMargin: 8,
         clipBehavior: Clip.hardEdge,
+        padding: EdgeInsets.zero,
         child: BottomNavigationBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
             showUnselectedLabels: false,
             showSelectedLabels: false,
             currentIndex: currentIndex,
@@ -59,13 +63,11 @@ class _HomeState extends State<Home> {
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.list,
-                    size: 20,
                   ),
                   label: "list"),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.settings,
-                    size: 20,
                   ),
                   label: "settings"),
             ]),

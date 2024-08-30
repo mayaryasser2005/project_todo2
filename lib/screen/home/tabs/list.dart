@@ -1,5 +1,7 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:project_todo2/firebase_functios.dart';
+import 'package:project_todo2/screen/home/tabs/task_items.dart';
 import 'package:project_todo2/utils/date_time_extension.dart';
 
 import '../../../utils/assets_Style.dart';
@@ -22,8 +24,50 @@ class _ListTabState extends State<ListTab> {
     return Column(
       children: [
         buildCalender(),
-        Spacer(
+        SizedBox(
+          height: 20,
+        ),
+        Expanded(
           flex: 75,
+          child: StreamBuilder(
+            stream: FirebaseFunctions.getTask(selectedCalenderDate),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return Center(
+                  child: Column(
+                    children: [
+                      Text("Something went wrong"),
+                      ElevatedButton(onPressed: () {}, child: Text("try again"))
+                    ],
+                  ),
+                );
+              }
+
+              var tasks =
+                  snapshot.data?.docs.map((e) => e.data()).toList() ?? [];
+              // var tasks = snapshot.data?.docs.map((doc) => doc.data()).toList();
+              if (tasks.isEmpty) {
+                return Text("NoTasks");
+              }
+              return Expanded(
+                // flex: 75,
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => SizedBox(
+                    height: 12,
+                  ),
+                  itemBuilder: (context, index) {
+                    return TaskItems(
+                      taskModel: tasks[index],
+                    );
+                  },
+                  itemCount: tasks.length,
+                ),
+              );
+            },
+          ),
         )
       ],
     );
@@ -68,15 +112,15 @@ class _ListTabState extends State<ListTab> {
                       Text(
                         date.dayName,
                         style: inSelected
-                            ? AssetsStyle.selectedCalenderDayStyle
-                            : AssetsStyle.unselectedCalenderDayStyle,
+                            ? AppStyle.selectedCalenderDayStyle
+                            : AppStyle.unselectedCalenderDayStyle,
                       ),
                       const Spacer(),
                       Text(
                         date.day.toString(),
                         style: inSelected
-                            ? AssetsStyle.selectedCalenderDayStyle
-                            : AssetsStyle.unselectedCalenderDayStyle,
+                            ? AppStyle.selectedCalenderDayStyle
+                            : AppStyle.unselectedCalenderDayStyle,
                       ),
                       const Spacer(),
                     ],
@@ -90,3 +134,5 @@ class _ListTabState extends State<ListTab> {
     );
   }
 }
+// selectedCalenderDate = selectedDate;
+// setState(() {});
